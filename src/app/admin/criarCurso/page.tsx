@@ -1,4 +1,5 @@
-"use client";  // Adicione essa linha para marcar o componente como Client Component
+// URL/admin/criarCurso
+"use client"; 
 
 import CursoService from "@/services/curso";
 import { useState } from "react";
@@ -8,7 +9,6 @@ export default function CriarCurso() {
   const [nomeCurso, setNomeCurso] = useState("");
   const [resumo, setResumo] = useState("");
 
-  // Usando o service diretamente
   const criarCurso = async () => {
     if (!nomeCurso || !resumo) {
       alert("Por favor, preencha todos os campos.");

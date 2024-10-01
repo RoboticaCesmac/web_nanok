@@ -14,9 +14,6 @@ interface Curso {
 
 export default function Cursos() {
     const [cursos, setCursos] = useState<Curso[]>([]);
-    const [editandoCursoId, setEditandoCursoId] = useState<string | null>(null);
-    const [nomeCurso, setNomeCurso] = useState("");
-    const [resumo, setResumo] = useState("");
     const router = useRouter();
 
     // Busca os cursos ao carregar a página
@@ -42,29 +39,14 @@ export default function Cursos() {
         }
     };
 
-    const handleEditarCurso = async () => {
-        if (editandoCursoId) {
-            const { sucesso } = await CursoService.editarCurso(editandoCursoId, nomeCurso, resumo);
-            if (sucesso) {
-                setCursos(cursos.map(curso => curso.id === editandoCursoId ? { id: curso.id, nomeCurso, resumo } : curso));
-                alert("Curso editado com sucesso.");
-                setEditandoCursoId(null);
-                setNomeCurso("");
-                setResumo("");
-            } else {
-                alert("Erro ao editar curso.");
-            }
-        }
-    };
-
     return (
         <main>
-            <AdminHeader titulo='Lista de Cursos'>
+            <AdminHeader titulo='Cursos'>
                 <Link className='btn btn-primary' href="/admin/criarCurso">Novo Curso</Link>
             </AdminHeader>
 
             <div className="card-header pb-0">
-                <h6>Cursos</h6>
+                <h6>Itens</h6>
             </div>
             <div className="card-body px-0 pt-0 pb-2">
                 <div className="table-responsive p-0">
@@ -90,17 +72,22 @@ export default function Cursos() {
                                         <p className="text-xs text-secondary mb-0">{curso.resumo}</p>
                                     </td>
                                     <td className="align-middle text-center text-sm">
-                                        <Link href={`/admin/cursos/editar/${curso.id}`} className="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Editar curso">
+                                        <Link 
+                                            href={`/admin/conteudo/cursos/editar/${curso.id}`} 
+                                            className="text-secondary font-weight-bold text-xs" 
+                                            data-toggle="tooltip" 
+                                            data-original-title="Editar curso"
+                                        >
                                             Editar
                                         </Link>
-                                        <span className="mx-2">|</span> {/* Adicionando espaço entre os links */}
+                                        <span className="mx-2">|</span>
                                         <Link 
                                             href="#" 
                                             className="text-danger font-weight-bold text-xs" 
                                             data-toggle="tooltip" 
                                             data-original-title="Deletar curso" 
                                             onClick={(e) => {
-                                                e.preventDefault(); // Previne o comportamento padrão do link
+                                                e.preventDefault();
                                                 handleDeletarCurso(curso.id);
                                             }}
                                         >
