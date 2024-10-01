@@ -9,7 +9,7 @@ const UsuarioService = {
      * @returns {usuario caso logado com sucesso, e o sucesso com um status de logado ou não}
      */
     logar: async(email: string, senha: string): Promise<{usuario?:any, sucesso:boolean}> => {
-        if (email == 'teste@teste.com' && senha == '123456') 
+        if (email == 'admin@admin.com' && senha == '123456') 
             return {sucesso: true, usuario: { nome: 'Carlos', email }}
         
         return { sucesso: false }
@@ -21,7 +21,7 @@ const UsuarioService = {
      * @returns sucesso status booleano caso tenha conseguido solicitar nova senha
      */
     recuperarSenha: async (email: string): Promise<{sucesso: boolean}> => {
-        if (email == 'teste@teste.com') 
+        if (email == 'admin@admin.com') 
             return {sucesso: true }
         
         return { sucesso: false }
