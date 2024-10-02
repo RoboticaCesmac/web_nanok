@@ -1,7 +1,6 @@
 import { db } from "../config/firebase";
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
 
-
 interface Curso {
   id: string;
   nomeCurso: string;
@@ -9,7 +8,8 @@ interface Curso {
 }
 
 const CursoService = {
-  // Função para criar um curso
+
+  // Criar curso
   criarCurso: async (nomeCurso: string, resumo: string) => {
     try {
       const docRef = await addDoc(collection(db, "Curso"), {
@@ -23,7 +23,7 @@ const CursoService = {
     }
   },
 
-  // Função para buscar todos os cursos
+  // Buscar 'TODOS' os cursos
   buscarCursos: async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "Curso"));
@@ -39,7 +39,7 @@ const CursoService = {
     }
   },
 
-  // Função para deletar um curso
+  // Deletar curso
   deletarCurso: async (id: string) => {
     try {
       await deleteDoc(doc(db, "Curso", id));
@@ -50,7 +50,7 @@ const CursoService = {
     }
   },
 
-  // Função para editar um curso
+  // Editar curso
   editarCurso: async (id: string, nomeCurso: string, resumo: string) => {
     try {
       const cursoRef = doc(db, "Curso", id);
@@ -62,7 +62,7 @@ const CursoService = {
     }
   },
 
-  // Função para buscar um único curso pelo ID
+  // Buscar UM curso pelo id
   detalharCurso: async (id: string): Promise<{ sucesso: boolean; curso?: Curso; mensagem?: string }> => {
     try {
       const cursoDoc = await getDoc(doc(db, "Curso", id));

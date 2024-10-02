@@ -100,6 +100,15 @@ export default function Unidades() {
                                             </td>
                                             <td className="align-middle text-center text-sm">
                                                 <Link 
+                                                    href={`/admin/conteudo/cursos/editar/${curso.id}`} 
+                                                    className="text-secondary font-weight-bold text-xs" 
+                                                    data-toggle="tooltip" 
+                                                    data-original-title="Editar curso"
+                                                >
+                                                Lições
+                                                </Link>
+                                                <span className="mx-2">|</span>
+                                                <Link 
                                                     href="#" 
                                                     className="text-danger font-weight-bold text-xs" 
                                                     data-toggle="tooltip" 

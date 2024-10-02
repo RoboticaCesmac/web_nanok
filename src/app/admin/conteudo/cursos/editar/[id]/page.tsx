@@ -77,12 +77,13 @@ export default function EditarCurso() {
           value={resumo}
           onChange={(e) => setResumo(e.target.value)}
           maxLength={255}
+          style={{height: "150px"}}
         />
         <div style={{ fontSize: "12px", color: "#666" }}>
           {`${resumo.length}/255`}
         </div>
       </div>
-      <button onClick={handleSalvar}>Salvar Alterações</button>
+      <button className="btn btn-primary" onClick={handleSalvar}>Salvar Alterações</button>
     </main>
   );
 }

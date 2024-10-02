@@ -1,6 +1,5 @@
-// src/services/licao.ts
 import { db } from "@/config/firebase";
-import { collection, getDocs, addDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, doc } from "firebase/firestore";
 
 const LicaoService = {
     async buscarUnidades() {
@@ -25,10 +24,10 @@ const LicaoService = {
 
     async criarLicao({ titulo, conteudo, imagem, unidade, ordem }: { titulo: string; conteudo?: string; imagem?: string; unidade: string; ordem: number; }) {
         try {
-            // Verifica se já existe uma lição com a mesma ordem
-            const existingLessons = await this.buscarLicoesPorOrdem(ordem);
+            // Verifica se já existe uma lição com a mesma ordem para a unidade selecionada
+            const existingLessons = await this.buscarLicoesPorUnidadeEOrdem(unidade, ordem);
             if (existingLessons.length > 0) {
-                return { sucesso: false, mensagem: "Já existe uma lição nessa ordem." };
+                return { sucesso: false, mensagem: "Já existe uma lição nessa ordem para esta unidade." };
             }
 
             const unidadeRef = doc(db, "Unidade", unidade);
@@ -47,9 +46,22 @@ const LicaoService = {
         }
     },
 
-    async buscarLicoesPorOrdem(ordem: number) {
-        const querySnapshot = await getDocs(collection(db, "Licao"));
-        return querySnapshot.docs.filter(doc => doc.data().ordem === ordem);
+    async buscarLicoesPorUnidadeEOrdem(unidade: string, ordem: number) {
+        try {
+            // Consulta filtrando pela unidade e ordem
+            const q = query(
+                collection(db, "Licao"),
+                where("unidade", "==", doc(db, "Unidade", unidade)),
+                where("ordem", "==", ordem)
+            );
+            const querySnapshot = await getDocs(q);
+
+            // Retorna a lista de lições que correspondem à unidade e à ordem
+            return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+            console.error("Erro ao buscar lições: ", error);
+            return [];
+        }
     },
 };
 
