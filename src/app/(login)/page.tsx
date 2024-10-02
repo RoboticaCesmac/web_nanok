@@ -18,7 +18,7 @@ export default function LoginPage() {
       setErro(false);
       if (sucesso) {
         setUsuario(usuario);
-        router.push('/admin/dashboard');
+        router.push('/admin/conteudo/cursos');
       } else {
         setErro(true);
       }

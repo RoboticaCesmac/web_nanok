@@ -2,61 +2,48 @@
 "use client"; 
 
 import React, { useState, useEffect } from "react";
-import { db } from "../../../config/firebase";
-import { addDoc, collection, getDocs, doc } from "firebase/firestore";
+import LicaoService from "@/services/licao";
 import { AdminHeader } from "../components";
 
 export default function CriarLicao() {
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
   const [imagem, setImagem] = useState("");
-  const [unidade, setUnidade] = useState(null);
-  const [ordem, setOrdem] = useState(null);
-  const [unidades, setUnidades] = useState([]);
-
-  const fetchUnidades = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "Unidade"));
-      const unidadesList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setUnidades(unidadesList);
-    } catch (error) {
-      console.error("Erro ao buscar unidades: ", error);
-    }
-  };
+  const [unidade, setUnidade] = useState<string | null>(null);
+  const [ordem, setOrdem] = useState<number | null>(null);
+  const [unidades, setUnidades] = useState<any[]>([]);
 
   useEffect(() => {
+    const fetchUnidades = async () => {
+      const unidadesList = await LicaoService.buscarUnidades();
+      setUnidades(unidadesList);
+    };
     fetchUnidades();
   }, []);
 
   const criarLicao = async () => {
-    if (!titulo || !conteudo || !imagem || !unidade || ordem === null) {
-      alert("Por favor, preencha todos os campos, incluindo a ordem.");
+    if (!titulo || ordem === null || !unidade) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
 
-    try {
-      const unidadeRef = doc(db, "Unidade", unidade);
-      const docRef = await addDoc(collection(db, "Licao"), {
-        titulo: titulo,
-        conteudo: conteudo,
-        imagem: imagem,
-        unidade: unidadeRef,
-        ordem: ordem,
-      });
+    const { sucesso, id, mensagem } = await LicaoService.criarLicao({
+      titulo,
+      conteudo: conteudo || "",
+      imagem: imagem || "",
+      unidade,
+      ordem,
+    });
 
-      alert(`Lição criada com ID: ${docRef.id}`);
-      // Limpa os campos
+    if (sucesso) {
+      alert(`Lição criada com ID: ${id}`);
       setTitulo("");
       setConteudo("");
       setImagem("");
       setUnidade(null);
       setOrdem(null);
-    } catch (error) {
-      alert("Falha ao criar a lição. Tente novamente.");
-      console.error("Erro ao criar lição: ", error);
+    } else {
+      alert(mensagem || "Falha ao criar a lição. Tente novamente.");
     }
   };
 
@@ -75,7 +62,7 @@ export default function CriarLicao() {
         <textarea
           placeholder="Conteúdo da Lição"
           value={conteudo}
-          onChange={(e) => setConteudo(e.target.value.slice(0, 255))} // Limita a 255 caracteres
+          onChange={(e) => setConteudo(e.target.value.slice(0, 255))}
           maxLength={255}
         />
         <div style={{ fontSize: '12px', color: '#666' }}>
@@ -105,10 +92,7 @@ export default function CriarLicao() {
             <button
               key={item.id}
               onClick={() => setUnidade(item.id)}
-              style={{
-                backgroundColor: unidade === item.id ? "#ddd" : "#fff",
-                margin: "5px",
-              }}
+              className='btn btn-outline-primary btn-sm m-2'
             >
               {item.nomeUnidade}
             </button>
@@ -117,7 +101,7 @@ export default function CriarLicao() {
           <p>Carregando unidades...</p>
         )}
       </div>
-      <button onClick={criarLicao}>Criar Lição</button>
+      <button className="btn btn-primary" onClick={criarLicao}>Criar Lição</button>
     </main>
   );
 }

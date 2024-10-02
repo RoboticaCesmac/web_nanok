@@ -36,13 +36,13 @@ export default function AdminLayout({children}: any) {
                     <hr className="horizontal dark mt-0" />
                     <div className="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                         <ul className="navbar-nav">
-                            {/* DASHBOARD */}
+                            {/* CURSOS */}
                             <li className="nav-item">
-                                <Link className={'nav-link ' + (url.includes('dashboard') ? 'active': '')} href="/admin/dashboard">
+                                <Link className={'nav-link ' + (url.includes('conteudo/cursos') ? 'active': '')} href="/admin/conteudo/cursos">
                                     <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i className="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                                     </div>
-                                    <span className="nav-link-text ms-1">Dashboard</span>
+                                    <span className="nav-link-text ms-1">Cursos</span>
                                 </Link>
                             </li>
 
@@ -50,7 +50,7 @@ export default function AdminLayout({children}: any) {
                             <li className="nav-item">
                                 <Link className={'nav-link ' + (url.includes('usuarios/editar') ? 'active': '')} href={`/admin/usuarios/editar/${usuario.id}`}>
                                     <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i className="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                                    <i className="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
                                     </div>
                                     <span className="nav-link-text ms-1">Perfil</span>
                                 </Link>

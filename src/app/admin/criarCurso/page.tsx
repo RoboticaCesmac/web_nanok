@@ -47,12 +47,13 @@ export default function CriarCurso() {
           value={resumo}
           onChange={(e) => setResumo(e.target.value)}
           maxLength={255}
+          style={{height: "150px"}}
         />
         <div style={{ fontSize: "12px", color: "#666" }}>
           {`${resumo.length}/255`}
         </div>
       </div>
-      <button onClick={criarCurso}>Criar Curso</button>
+      <button className="btn btn-primary" onClick={criarCurso}>Criar Curso</button>
     </main>
   );
 }
