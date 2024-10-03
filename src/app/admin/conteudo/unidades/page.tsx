@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import UnidadeService from "@/services/unidade"; // Importe o serviço de unidade
+import UnidadeService from "@/services/unidade";
 import { AdminHeader } from "../../components";
 import Link from "next/link";
 
@@ -100,12 +100,12 @@ export default function Unidades() {
                                             </td>
                                             <td className="align-middle text-center text-sm">
                                                 <Link 
-                                                    href={`/admin/conteudo/cursos/editar/${curso.id}`} 
-                                                    className="text-secondary font-weight-bold text-xs" 
+                                                    href={`/admin/conteudo/unidades/${unidade.id}/listarLicoes`} 
+                                                    className="text-primary font-weight-bold text-xs"
                                                     data-toggle="tooltip" 
-                                                    data-original-title="Editar curso"
+                                                    data-original-title="Ver lições"
                                                 >
-                                                Lições
+                                                    Lições
                                                 </Link>
                                                 <span className="mx-2">|</span>
                                                 <Link 

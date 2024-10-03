@@ -33,6 +33,17 @@ const UnidadeService = {
         return { sucesso: true, unidades: unidadesList };
     },
 
+    async buscarUnidadePorId(id: string) {
+        const unidadeRef = doc(db, "Unidade", id);
+        const unidadeSnapshot = await getDoc(unidadeRef);
+        if (unidadeSnapshot.exists()) {
+            const unidadeData = unidadeSnapshot.data();
+            return { sucesso: true, unidade: { id: unidadeSnapshot.id, ...unidadeData } };
+        } else {
+            return { sucesso: false, mensagem: "Unidade não encontrada" };
+        }
+    },
+
     async criarUnidade(nomeUnidade: string, referenciaCurso: string) {
         try {
             const cursoRef = doc(db, "Curso", referenciaCurso);
@@ -58,7 +69,6 @@ const UnidadeService = {
             return { sucesso: false };
         }
     },
-
 };
 
 export default UnidadeService;
