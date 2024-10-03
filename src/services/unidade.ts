@@ -33,6 +33,22 @@ const UnidadeService = {
         return { sucesso: true, unidades: unidadesList };
     },
 
+    async buscarCursos() {
+        const cursosList: any[] = [];
+        const cursosRef = collection(db, "Curso"); // Coleção de cursos
+
+        const cursosSnapshot = await getDocs(cursosRef);
+        cursosSnapshot.forEach((cursoDoc) => {
+            const cursoData = cursoDoc.data();
+            cursosList.push({
+                id: cursoDoc.id,
+                nomeCurso: cursoData.nomeCurso || "Sem Nome", // Utilize um nome padrão se não houver
+            });
+        });
+
+        return cursosList;
+    },
+
     async buscarUnidadePorId(id: string) {
         const unidadeRef = doc(db, "Unidade", id);
         const unidadeSnapshot = await getDoc(unidadeRef);

@@ -1,5 +1,4 @@
-// URL/admin/criarPagina
-"use client"; 
+"use client";
 
 import React, { useState, useEffect } from "react";
 import LicaoService from "@/services/licao";
@@ -8,7 +7,6 @@ import { AdminHeader } from "../components";
 export default function CriarLicao() {
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
-  const [imagem, setImagem] = useState("");
   const [unidade, setUnidade] = useState<string | null>(null);
   const [ordem, setOrdem] = useState<number | null>(null);
   const [unidades, setUnidades] = useState<any[]>([]);
@@ -27,10 +25,18 @@ export default function CriarLicao() {
       return;
     }
 
+    // Verificando se já existe uma lição com a mesma ordem na unidade
+    const licoesExistentes = await LicaoService.buscarLicoesPorUnidade(unidade);
+    const licaoExistente = licoesExistentes.find(licao => licao.ordem === ordem);
+
+    if (licaoExistente) {
+      alert(`Já existe uma lição com a ordem ${ordem} na unidade selecionada.`);
+      return;
+    }
+
     const { sucesso, id, mensagem } = await LicaoService.criarLicao({
       titulo,
       conteudo: conteudo || "",
-      imagem: imagem || "",
       unidade,
       ordem,
     });
@@ -39,7 +45,6 @@ export default function CriarLicao() {
       alert(`Lição criada com ID: ${id}`);
       setTitulo("");
       setConteudo("");
-      setImagem("");
       setUnidade(null);
       setOrdem(null);
     } else {
@@ -49,7 +54,7 @@ export default function CriarLicao() {
 
   return (
     <main>
-      <AdminHeader titulo='Criar lição' />
+      <AdminHeader titulo='Criar Lição' />
       <div className="d-flex px-2 py-2">
         <input
           type="text"
@@ -71,14 +76,6 @@ export default function CriarLicao() {
       </div>
       <div className="d-flex px-2 py-2">
         <input
-          type="text"
-          placeholder="URL da Imagem"
-          value={imagem}
-          onChange={(e) => setImagem(e.target.value)}
-        />
-      </div>
-      <div className="d-flex px-2 py-2">
-        <input
           type="number"
           placeholder="Ordem (inteiro)"
           value={ordem || ""}
@@ -92,9 +89,9 @@ export default function CriarLicao() {
             <button
               key={item.id}
               onClick={() => setUnidade(item.id)}
-              className='btn btn-outline-primary btn-sm m-2'
+              className={`btn ${unidade === item.id ? 'btn-primary' : 'btn-outline-primary'} btn-sm m-2`}
             >
-              {item.nomeUnidade}
+              {item.nomeUnidade || "Sem Nome"}
             </button>
           ))
         ) : (

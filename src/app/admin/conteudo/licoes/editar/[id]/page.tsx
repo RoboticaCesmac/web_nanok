@@ -10,7 +10,6 @@ export default function EditarLicao({ params }) {
     const { id: licaoId, unidadeId } = params; // Pegando os parâmetros da URL
     const [titulo, setTitulo] = useState("");
     const [conteudo, setConteudo] = useState("");
-    const [imagem, setImagem] = useState("");
     const [ordem, setOrdem] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -21,7 +20,6 @@ export default function EditarLicao({ params }) {
             if (licao) {
                 setTitulo(licao.titulo);
                 setConteudo(licao.conteudo);
-                setImagem(licao.imagem);
                 setOrdem(licao.ordem);
             } else {
                 alert("Lição não encontrada");
@@ -40,7 +38,6 @@ export default function EditarLicao({ params }) {
         const { sucesso, mensagem } = await LicaoService.editarLicao(licaoId, {
             titulo,
             conteudo: conteudo || "",
-            imagem: imagem || "",
             ordem,
         });
 
@@ -78,14 +75,6 @@ export default function EditarLicao({ params }) {
                 <div style={{ fontSize: '12px', color: '#666' }}>
                     {`${conteudo.length}/255`}
                 </div>
-            </div>
-            <div className="d-flex px-2 py-2">
-                <input
-                    type="text"
-                    placeholder="URL da Imagem"
-                    value={imagem}
-                    onChange={(e) => setImagem(e.target.value)}
-                />
             </div>
             <div className="d-flex px-2 py-2">
                 <input

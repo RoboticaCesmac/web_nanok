@@ -46,23 +46,38 @@ export default function AdminLayout({children}: any) {
                                 </Link>
                             </li>
 
-                            {/* PERFIL */}
+                            {/* Unidades */}
                             <li className="nav-item">
-                                <Link className={'nav-link ' + (url.includes('usuarios/editar') ? 'active': '')} href={`/admin/usuarios/editar/${usuario.id}`}>
+                                <Link className={'nav-link ' + (url.includes('conteudo/unidades') ? 'active': '')} href={'/admin/conteudo/unidades'}>
                                     <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i className="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
                                     </div>
-                                    <span className="nav-link-text ms-1">Perfil</span>
+                                    <span className="nav-link-text ms-1">Unidades</span>
                                 </Link>
                             </li>
-
-                            {/* USUARIOS */}
+                            {/* Criar curso */}
                             <li className="nav-item">
-                                <Link className={'nav-link ' + (url.endsWith('usuarios') ? 'active': '')} href="/admin/usuarios">
+                                <Link className={'nav-link ' + (url.endsWith('criarCurso') ? 'active': '')} href="/admin/criarCurso">
                                     <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i className="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
+                                    <i className="material-icons text-warning text-sm opacity-10">+</i>
                                     </div>
-                                    <span className="nav-link-text ms-1">Usuarios</span>
+                                    <span className="nav-link-text ms-1">Criar curso</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className={'nav-link ' + (url.endsWith('criarUnidade') ? 'active': '')} href="/admin/criarUnidade">
+                                    <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i className="material-icons text-warning text-sm opacity-10">+</i>
+                                    </div>
+                                    <span className="nav-link-text ms-1">Criar unidade</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className={'nav-link ' + (url.endsWith('criarLicao') ? 'active': '')} href="/admin/criarLicao">
+                                    <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i className="material-icons text-warning text-sm opacity-10">+</i>
+                                    </div>
+                                    <span className="nav-link-text ms-1">Criar lição</span>
                                 </Link>
                             </li>
                         </ul>
