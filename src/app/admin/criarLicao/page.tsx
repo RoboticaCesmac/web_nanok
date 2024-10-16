@@ -67,11 +67,11 @@ export default function CriarLicao() {
         <textarea
           placeholder="Conteúdo da Lição"
           value={conteudo}
-          onChange={(e) => setConteudo(e.target.value.slice(0, 255))}
-          maxLength={255}
+          onChange={(e) => setConteudo(e.target.value.slice(0, 450))}
+          maxLength={450}
         />
         <div style={{ fontSize: '12px', color: '#666' }}>
-          {`${conteudo.length}/255`}
+          {`${conteudo.length}/450`}
         </div>
       </div>
       <div className="d-flex px-2 py-2">
