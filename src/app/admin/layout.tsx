@@ -116,7 +116,7 @@ export default function AdminLayout({children}: any) {
                             <div className="row align-items-center justify-content-lg-between">
                                 <div className="col-lg-6 mb-lg-0 mb-4">
                                     <p className="copyright text-center text-white text-sm text-lg-start">
-                                        Template Argon adaptado por CWG
+                                        Gerenciador de conteúdo NanoK
                                     </p>
                                 </div>
                             </div>

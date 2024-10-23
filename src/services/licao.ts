@@ -11,6 +11,7 @@ import {
     getDoc,
     updateDoc,
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // Interfaces para os dados
 interface Unidade {
@@ -24,6 +25,7 @@ interface Licao {
     conteudo: string;
     unidade: string; // Referência à unidade
     ordem: number;
+    imagemUrl?: string; // Adicionando campo para URL da imagem
 }
 
 interface CriarLicaoInput {
@@ -31,6 +33,7 @@ interface CriarLicaoInput {
     conteudo: string;
     unidade: string;
     ordem: number;
+    imagemUrl?: string;
 }
 
 const LicaoService = {
@@ -53,6 +56,20 @@ const LicaoService = {
         }
     },
 
+    // Função para fazer upload da imagem
+    async uploadImagem(imagem: File): Promise<string> {
+        try {
+            const storage = getStorage();
+            const storageRef = ref(storage, `licoes/${imagem.name}`);
+            const snapshot = await uploadBytes(storageRef, imagem);
+            const url = await getDownloadURL(snapshot.ref);
+            return url; // Retorna a URL para salvar no Firestore
+        } catch (error) {
+            console.error("Erro ao fazer upload da imagem: ", error);
+            throw error;
+        }
+    },
+
     // Buscar lições por unidade e organizar por ordem
     async buscarLicoesPorUnidade(unidadeId: string): Promise<Licao[]> {
         try {
@@ -72,20 +89,15 @@ const LicaoService = {
         }
     },
 
-    // Função para verificar se já existe uma lição com a mesma ordem na unidade
-    async verificarOrdemExistente(unidadeId: string, ordem: number): Promise<boolean> {
-        const licoes = await this.buscarLicoesPorUnidade(unidadeId);
-        return licoes.some(licao => licao.ordem === ordem);
-    },
-
     // Função para criar uma nova lição
-    async criarLicao({ titulo, conteudo, unidade, ordem }: CriarLicaoInput) {
+    async criarLicao({ titulo, conteudo, unidade, ordem, imagemUrl }: CriarLicaoInput) {
         try {
             const licaoRef = await addDoc(collection(db, "Licao"), {
                 titulo,
                 conteudo,
                 unidade: doc(db, "Unidade", unidade),
                 ordem,
+                imagemUrl,  // Incluindo a URL da imagem
             });
             return { sucesso: true, id: licaoRef.id };
         } catch (error) {
