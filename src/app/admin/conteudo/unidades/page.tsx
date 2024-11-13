@@ -1,3 +1,4 @@
+// URL/admin/unidades
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -16,7 +17,6 @@ export default function Unidades() {
     const [unidades, setUnidades] = useState<Unidade[]>([]);
     const [pesquisa, setPesquisa] = useState("");
 
-    // Busca as unidades ao carregar a página
     useEffect(() => {
         const buscarUnidades = async () => {
             const { sucesso, unidades } = await UnidadeService.buscarUnidades();
@@ -39,12 +39,10 @@ export default function Unidades() {
         }
     };
 
-    // Filtra as unidades com base na pesquisa
     const unidadesFiltradas = unidades.filter(unidade => 
         unidade.nomeUnidade.toLowerCase().includes(pesquisa.toLowerCase())
     );
 
-    // Organiza as unidades por curso
     const unidadesPorCurso = unidadesFiltradas.reduce((acc, unidade) => {
         const { nomeCurso } = unidade;
         if (!acc[nomeCurso]) {
@@ -67,7 +65,8 @@ export default function Unidades() {
                     placeholder="Pesquisar unidades"
                     value={pesquisa}
                     onChange={(e) => setPesquisa(e.target.value)}
-                    style={{ margin: "10px 0", padding: "5px", width: "30%" }} // Ajuste do tamanho da barra de pesquisa
+                    className="form-control form-control-sm"
+                    style={{ maxWidth: "30%", marginTop: "10px" }}
                 />
             </div>
             <div className="card-body px-0 pt-0 pb-2">

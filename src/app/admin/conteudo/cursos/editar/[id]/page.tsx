@@ -13,7 +13,7 @@ interface Curso {
 
 export default function EditarCurso() {
   const router = useRouter();
-  const { id } = useParams() as { id: string }; // Definindo o tipo do parâmetro id
+  const { id } = useParams() as { id: string };
   const [nomeCurso, setNomeCurso] = useState<string>("");
   const [resumo, setResumo] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
@@ -61,29 +61,40 @@ export default function EditarCurso() {
   }
 
   return (
-    <main>
+    <main className="container mt-4">
       <AdminHeader titulo="Editar Curso" />
-      <div className="d-flex px-2 py-2">
+
+      <div className="mb-3">
+        <label htmlFor="nomeCurso" className="form-label">Nome do Curso</label>
         <input
           type="text"
-          placeholder="Nome do Curso"
+          id="nomeCurso"
+          className="form-control"
+          placeholder="Digite o nome do curso"
           value={nomeCurso}
           onChange={(e) => setNomeCurso(e.target.value)}
         />
       </div>
-      <div className="d-flex flex-column justify-content-center d-flex px-2 py-2">
+
+      <div className="mb-3">
+        <label htmlFor="resumo" className="form-label">Resumo do Curso</label>
         <textarea
-          placeholder="Resumo do Curso"
+          id="resumo"
+          className="form-control"
+          placeholder="Digite um resumo do curso"
           value={resumo}
           onChange={(e) => setResumo(e.target.value)}
           maxLength={255}
-          style={{height: "150px"}}
+          style={{ height: "150px" }}
         />
-        <div style={{ fontSize: "12px", color: "#666" }}>
-          {`${resumo.length}/255`}
-        </div>
+        <small className="text-muted d-block mt-1">
+          {`${resumo.length}/255 caracteres`}
+        </small>
       </div>
-      <button className="btn btn-primary" onClick={handleSalvar}>Salvar Alterações</button>
+
+      <button onClick={handleSalvar} className="btn btn-primary w-100 mt-3">
+        Salvar Alterações
+      </button>
     </main>
   );
 }

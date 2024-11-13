@@ -10,7 +10,7 @@ export default function CriarLicao() {
   const [unidade, setUnidade] = useState<string | null>(null);
   const [ordem, setOrdem] = useState<number | null>(null);
   const [unidades, setUnidades] = useState<any[]>([]);
-  const [imagem, setImagem] = useState<File | null>(null); // Novo estado para a imagem
+  const [imagem, setImagem] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchUnidades = async () => {
@@ -26,7 +26,6 @@ export default function CriarLicao() {
       return;
     }
 
-    // Verificando se já existe uma lição com a mesma ordem na unidade
     const licoesExistentes = await LicaoService.buscarLicoesPorUnidade(unidade);
     const licaoExistente = licoesExistentes.find(licao => licao.ordem === ordem);
 
@@ -38,7 +37,6 @@ export default function CriarLicao() {
     try {
       let imagemUrl = "";
 
-      // Se houver uma imagem, faz o upload
       if (imagem) {
         imagemUrl = await LicaoService.uploadImagem(imagem);
         console.log("Imagem enviada com sucesso:", imagemUrl);
@@ -49,7 +47,7 @@ export default function CriarLicao() {
         conteudo: conteudo || "",
         unidade,
         ordem,
-        imagemUrl, // Adiciona a URL da imagem ao criar a lição
+        imagemUrl,
       });
 
       if (sucesso) {
@@ -58,7 +56,7 @@ export default function CriarLicao() {
         setConteudo("");
         setUnidade(null);
         setOrdem(null);
-        setImagem(null); // Limpa o campo de imagem
+        setImagem(null);
       } else {
         alert(mensagem || "Falha ao criar a lição. Tente novamente.");
       }
@@ -69,37 +67,58 @@ export default function CriarLicao() {
   };
 
   return (
-    <main>
+    <main className="container mt-4">
+      {/* Usando o AdminHeader com o título da página */}
       <AdminHeader titulo="Criar Lição" />
-      <div className="d-flex px-2 py-2">
+
+      <div className="mb-3">
+        <label htmlFor="titulo" className="form-label">Título da Lição</label>
         <input
           type="text"
-          placeholder="Título da Lição"
+          id="titulo"
+          className="form-control"
+          placeholder="Digite o título da lição"
           value={titulo}
           onChange={(e) => setTitulo(e.target.value.slice(0, 25))}
+          maxLength={25}
         />
       </div>
-      <div className="d-flex flex-column justify-content-center px-2 py-2">
+
+      <div className="mb-3">
+        <label htmlFor="conteudo" className="form-label">Conteúdo da Lição</label>
         <textarea
-          placeholder="Conteúdo da Lição"
+          id="conteudo"
+          className="form-control"
+          placeholder="Digite o conteúdo da lição"
           value={conteudo}
           onChange={(e) => setConteudo(e.target.value.slice(0, 350))}
           maxLength={350}
         />
-        <div style={{ fontSize: "12px", color: "#666" }}>
-          {`${conteudo.length}/350`}
-        </div>
+        <small className="text-muted d-block mt-1">
+          {`${conteudo.length}/350 caracteres`}
+        </small>
       </div>
-      <div className="d-flex px-2 py-2">
+
+      <div className="mb-3">
+        <label htmlFor="ordem" className="form-label">Ordem da Lição</label>
         <input
           type="number"
-          placeholder="Ordem (inteiro)"
+          id="ordem"
+          className="form-control"
+          placeholder="Digite a ordem (inteiro)"
           value={ordem || ""}
           onChange={(e) => setOrdem(Number(e.target.value))}
         />
       </div>
-      <div className="d-flex px-2 py-2">
-        <select onChange={(e) => setUnidade(e.target.value)} value={unidade || ""}>
+
+      <div className="mb-3">
+        <label htmlFor="unidade" className="form-label">Selecione a Unidade</label>
+        <select
+          id="unidade"
+          className="form-select"
+          onChange={(e) => setUnidade(e.target.value)}
+          value={unidade || ""}
+        >
           <option value="">Selecione uma unidade</option>
           {unidades.map((u) => (
             <option key={u.id} value={u.id}>
@@ -109,23 +128,19 @@ export default function CriarLicao() {
         </select>
       </div>
 
-      <div className="d-flex px-2 py-2">
+      <div className="mb-3">
+        <label htmlFor="imagem" className="form-label">Upload de Imagem</label>
         <input
           type="file"
-          id="file"
-          className="file-input" 
+          id="imagem"
+          className="form-control"
           onChange={(e) => setImagem(e.target.files ? e.target.files[0] : null)}
         />
       </div>
 
-      <div className=" py-3 ">
-        <button
-          onClick={criarLicao}
-          className="btn btn-primary"
-        >
-          Criar Lição
-        </button>
-      </div>
+      <button onClick={criarLicao} className="btn btn-primary w-100 mt-3">
+        Criar Lição
+      </button>
     </main>
   );
 }

@@ -1,10 +1,10 @@
-// Import the functions you need from the SDKs you need
+// Imports
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "@firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
+//Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAZbH3O6ZdQ7MFLT6SDcLaF8TCyOhTeU9I",
   authDomain: "tcc-app-54f7d.firebaseapp.com",

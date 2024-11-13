@@ -1,4 +1,3 @@
-// URL/admin/criarCurso
 "use client"; 
 
 import CursoService from "@/services/curso";
@@ -31,29 +30,40 @@ export default function CriarCurso() {
   };
 
   return (
-    <main>
+    <main className="container mt-4">
+      {/* Exibe o título com o AdminHeader */}
       <AdminHeader titulo="Criar Curso" />
-      <div className="d-flex px-2 py-2">
+
+      {/* Formulário para criar o curso */}
+      <div className="mb-3">
+        <label htmlFor="nomeCurso" className="form-label">Nome do Curso</label>
         <input
           type="text"
-          placeholder="Nome do Curso"
+          id="nomeCurso"
+          className="form-control"
+          placeholder="Digite o nome do curso"
           value={nomeCurso}
           onChange={(e) => setNomeCurso(e.target.value)}
         />
       </div>
-      <div className="d-flex flex-column justify-content-center d-flex px-2 py-2">
+
+      <div className="mb-3">
+        <label htmlFor="resumo" className="form-label">Resumo do Curso</label>
         <textarea
-          placeholder="Resumo do Curso"
+          id="resumo"
+          className="form-control"
+          placeholder="Digite um resumo do curso"
           value={resumo}
           onChange={(e) => setResumo(e.target.value)}
           maxLength={255}
-          style={{height: "150px"}}
+          style={{ height: "150px" }}
         />
-        <div style={{ fontSize: "12px", color: "#666" }}>
-          {`${resumo.length}/255`}
-        </div>
+        <small className="text-muted">{`${resumo.length}/255`}</small>
       </div>
-      <button className="btn btn-primary" onClick={criarCurso}>Criar Curso</button>
+
+      <button className="btn btn-primary w-100" onClick={criarCurso}>
+        Criar Curso
+      </button>
     </main>
   );
 }

@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import UnidadeService from "@/services/unidade"; // Importa o service de unidade
+import UnidadeService from "@/services/unidade";
 import { AdminHeader } from "../components";
 
 export default function CriarUnidade() {
@@ -10,11 +10,10 @@ export default function CriarUnidade() {
   const [referenciaCurso, setReferenciaCurso] = useState<string | null>(null);
   const [cursos, setCursos] = useState<any[]>([]);
 
-  // Carrega os cursos ao montar o componente
   useEffect(() => {
     const fetchCursos = async () => {
-      const cursosList = await UnidadeService.buscarCursos(); // Chama a função para buscar cursos
-      console.log("Cursos carregados:", cursosList); // Verifica se os cursos estão sendo carregados
+      const cursosList = await UnidadeService.buscarCursos();
+      console.log("Cursos carregados:", cursosList);
       setCursos(cursosList);
     };
     fetchCursos();
@@ -41,33 +40,47 @@ export default function CriarUnidade() {
   };
 
   return (
-    <main>
-      <AdminHeader titulo='Criar Unidade' />
-      <div className="d-flex px-2 py-2">
+    <main className="container mt-4">
+      {/* Adicionando o AdminHeader */}
+      <AdminHeader titulo="Criar Unidade" />
+      <div className="mb-3">
+        <label htmlFor="nomeUnidade" className="form-label">Nome da Unidade</label>
         <input
           type="text"
-          placeholder="Nome da Unidade"
+          id="nomeUnidade"
+          className="form-control"
+          placeholder="Digite o nome da unidade"
           value={nomeUnidade}
-          onChange={(e) => setNomeUnidade(e.target.value.slice(0, 50))} // Limita a 50 caracteres
+          onChange={(e) => setNomeUnidade(e.target.value.slice(0, 50))}
         />
+        <small className="text-muted d-block mt-1">
+          Máximo de 50 caracteres
+        </small>
       </div>
-      <div className="d-flex px-1 py-2">
-        <label>Selecione o Curso:</label>
+      <div className="mb-3">
+        <label className="form-label">Selecione o Curso:</label>
         {cursos.length > 0 ? (
-          cursos.map((curso) => (
-            <button
-              key={curso.id}
-              onClick={() => setReferenciaCurso(curso.id)}
-              className={`btn ${referenciaCurso === curso.id ? 'btn-primary' : 'btn-outline-primary'} btn-sm m-2`}
-            >
-              {curso.nomeCurso || "Sem Nome"}
-            </button>
-          ))
+          <div className="row">
+            {cursos.map((curso, index) => (
+              <div className="col-3 mb-2" key={curso.id}>
+                <button
+                  onClick={() => setReferenciaCurso(curso.id)}
+                  className={`btn ${
+                    referenciaCurso === curso.id ? "btn-primary" : "btn-outline-primary"
+                  } w-100`}
+                >
+                  {curso.nomeCurso || "Sem Nome"}
+                </button>
+              </div>
+            ))}
+          </div>
         ) : (
-          <p>Nenhum curso disponível ou carregando...</p>
+          <p className="text-muted">Nenhum curso disponível ou carregando...</p>
         )}
       </div>
-      <button className="btn btn-primary" onClick={criarUnidade}>Criar Unidade</button>
+      <button className="btn btn-primary w-100" onClick={criarUnidade}>
+        Criar Unidade
+      </button>
     </main>
   );
 }

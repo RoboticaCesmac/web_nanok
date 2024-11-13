@@ -85,59 +85,71 @@ export default function EditarLicao({ params }) {
 
     return (
         <main>
-            <AdminHeader titulo='Editar Lição' />
-            <div className="d-flex px-2 py-2">
-                <input
-                    type="text"
-                    placeholder="Título da Lição"
-                    value={titulo}
-                    onChange={(e) => setTitulo(e.target.value.slice(0, 25))}
-                />
-            </div>
-            <div className="d-flex flex-column justify-content-center px-2 py-2">
-                <textarea
-                    placeholder="Conteúdo da Lição"
-                    value={conteudo}
-                    onChange={(e) => setConteudo(e.target.value.slice(0, 350))}
-                    maxLength={350}
-                />
-                <div style={{ fontSize: '12px', color: '#666' }}>
-                    {`${conteudo.length}/350`}
+            <AdminHeader titulo="Editar Lição" />
+            
+            <div className="card-body px-0 pt-0 pb-2">
+                <div className="d-flex px-2 py-2">
+                    <input
+                        type="text"
+                        placeholder="Título da Lição"
+                        value={titulo}
+                        onChange={(e) => setTitulo(e.target.value.slice(0, 25))}
+                        className="form-control"
+                    />
                 </div>
-            </div>
-            <div className="d-flex px-2 py-2">
-                <input
-                    type="number"
-                    placeholder="Ordem (inteiro)"
-                    value={ordem || ""}
-                    onChange={(e) => setOrdem(parseInt(e.target.value, 10))}
-                />
-            </div>
-            {/* Exibir a imagem já salva */}
-            {!imagemSubstituida && imagemUrlAtual && (
-                <img
-                    src={imagemUrlAtual}
-                    alt="Imagem atual da lição"
-                    style={{ width: "180px", height: "180px", marginTop: "10px", border: '2px solid #007bff' }}
-                />
-            )}
-            {/* Campo para fazer o upload da nova imagem */}
-            <div className="d-flex flex-column px-2 py-2">
-                <input
-                    type="file"
-                    className="form-control-file"
-                    onChange={handleImageChange} // Atualiza a imagem e gera a pré-visualização
-                />
-                {/* Exibir a pré-visualização da nova imagem, se existir */}
-                {novaImagemUrl && (
+
+                <div className="d-flex flex-column justify-content-center px-2 py-2">
+                    <textarea
+                        placeholder="Conteúdo da Lição"
+                        value={conteudo}
+                        onChange={(e) => setConteudo(e.target.value.slice(0, 350))}
+                        maxLength={350}
+                        className="form-control"
+                    />
+                    <div style={{ fontSize: '12px', color: '#666' }}>
+                        {`${conteudo.length}/350`}
+                    </div>
+                </div>
+
+                <div className="d-flex px-2 py-2">
+                    <input
+                        type="number"
+                        placeholder="Ordem (inteiro)"
+                        value={ordem || ""}
+                        onChange={(e) => setOrdem(parseInt(e.target.value, 10))}
+                        className="form-control"
+                    />
+                </div>
+
+                {/* Exibir a imagem já salva */}
+                {!imagemSubstituida && imagemUrlAtual && (
                     <img
-                        src={novaImagemUrl}
-                        alt="Pré-visualização da nova imagem"
+                        src={imagemUrlAtual}
+                        alt="Imagem atual da lição"
                         style={{ width: "180px", height: "180px", marginTop: "10px", border: '2px solid #007bff' }}
                     />
                 )}
+
+                {/* Campo para fazer o upload da nova imagem */}
+                <div className="d-flex flex-column px-2 py-2">
+                    <input
+                        type="file"
+                        className="form-control-file"
+                        onChange={handleImageChange} // Atualiza a imagem e gera a pré-visualização
+                    />
+                    
+                    {/* Exibir a pré-visualização da nova imagem, se existir */}
+                    {novaImagemUrl && (
+                        <img
+                            src={novaImagemUrl}
+                            alt="Pré-visualização da nova imagem"
+                            style={{ width: "180px", height: "180px", marginTop: "10px", border: '2px solid #007bff' }}
+                        />
+                    )}
+                </div>
+
+                <button className="btn btn-primary" onClick={editarLicao}>Salvar Lição</button>
             </div>
-            <button className="btn btn-primary" onClick={editarLicao}>Salvar Lição</button>
         </main>
     );
 }
