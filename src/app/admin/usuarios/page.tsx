@@ -6,7 +6,7 @@ import { useUsuarioService } from '../../../services/usuario';
 
 export default function UsuariosPage () {
 
-    const usuariosSrv = useUsuarioService();
+    const usuariosSrv :any = useUsuarioService();
     const [ usuarios, setUsuarios ] = React.useState<any[]>([]);
     // ===========================================================
     const buscarUsuarios = async () => {
@@ -38,7 +38,7 @@ export default function UsuariosPage () {
                   </thead>
                   <tbody>
                     { usuarios.map((usuario) => (
-                        <tr>
+                        <tr key={usuario}>
                             <td>
                                 <div className="d-flex px-2 py-1">
                                     <div className="d-flex flex-column justify-content-center">

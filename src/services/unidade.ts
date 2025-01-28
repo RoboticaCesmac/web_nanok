@@ -19,7 +19,7 @@ const UnidadeService = {
             const cursoRef = unidadeData.referenciaCurso;
 
             // Buscando o nome do curso
-            const cursoSnapshot = await getDoc(cursoRef);
+            const cursoSnapshot:any = await getDoc(cursoRef);
             const nomeCurso = cursoSnapshot.exists() ? cursoSnapshot.data().nomeCurso : "Curso não encontrado";
 
             unidadesList.push({

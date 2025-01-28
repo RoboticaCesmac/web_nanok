@@ -34,7 +34,7 @@ export default function AdminLayout({children}: any) {
                         <div className="sidenav-header">
                             <i className="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
                             <p className="navbar-brand m-0">
-                                <span className="ms-1 font-weight-bold">ADMIN TEMPLATE</span>
+                                <span className="ms-1 font-weight-bold">NanoK Gerenciador</span>
                             </p>
                         </div>
                         <hr className="horizontal dark mt-0" />

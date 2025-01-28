@@ -7,7 +7,7 @@ import { Field, Form, Formik } from 'formik';
 export default function UsuarioEditarPage ({params}: any) {
 
     const  [ usuario, setUsuario ] = React.useState<any>(null);
-    const usuariosSrv = useUsuarioService();
+    const usuariosSrv:any = useUsuarioService();
     // ======================================================================
     const handleSalvar = async (usuario:any) => {
       if (params?.id) usuariosSrv.editar(usuario);

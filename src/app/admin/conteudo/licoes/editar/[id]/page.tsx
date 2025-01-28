@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import LicaoService from "@/services/licao";
 import { AdminHeader } from "@/app/admin/components";
 
-export default function EditarLicao({ params }) {
+export default function EditarLicao({ params }:any) {
     const router = useRouter();
     const { id: licaoId } = params; // Pegando os parâmetros da URL
     const [titulo, setTitulo] = useState("");

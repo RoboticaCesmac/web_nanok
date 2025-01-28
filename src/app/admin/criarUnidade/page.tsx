@@ -25,7 +25,7 @@ export default function CriarUnidade() {
       return;
     }
 
-    const { sucesso, id, mensagem } = await UnidadeService.criarUnidade(
+    const { sucesso, id, mensagem } :any = await UnidadeService.criarUnidade(
       nomeUnidade,
       referenciaCurso
     );

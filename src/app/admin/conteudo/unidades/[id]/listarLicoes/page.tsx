@@ -33,7 +33,7 @@ export default function Licoes({ params }: LicoesProps) {
             setLicoes(licoes);
 
             // Buscar nome da unidade pelo ID
-            const { sucesso, unidade } = await UnidadeService.buscarUnidadePorId(unidadeId);
+            const { sucesso, unidade } :any = await UnidadeService.buscarUnidadePorId(unidadeId);
             if (sucesso && unidade) {
                 setUnidadeNome(unidade.nomeUnidade);
             } else {
